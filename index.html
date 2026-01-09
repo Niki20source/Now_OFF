@@ -10,18 +10,81 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
+      font-family: Arial, sans-serif;
     }
 
     body {
       background: url("offline.png") no-repeat center center fixed;
       background-size: cover;
-      background-color: #8fd3d8; /* barva pozadí – můžeš změnit */
+      background-color: #8fd3d8;
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    /* Popup okno */
+    .modal {
+      background: white;
+      padding: 25px 30px;
+      border-radius: 12px;
+      text-align: center;
+      max-width: 320px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+      animation: pop 0.25s ease;
+    }
+
+    .modal h2 {
+      margin: 0 0 15px 0;
+      font-size: 18px;
+      color: #333;
+    }
+
+    .modal button {
+      padding: 10px 22px;
+      border: none;
+      border-radius: 6px;
+      background: #4CAF50;
+      color: white;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .modal button:hover {
+      background: #43a047;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
   </style>
 </head>
 <body>
 
+  <!-- Popup -->
+  <div class="overlay" id="popup">
+    <div class="modal">
+      <h2>Vypadá to, že server je aktuálně vypnutý.</h2>
+      <button onclick="closePopup()">OK</button>
+    </div>
+  </div>
+
   <script>
+    function closePopup() {
+      document.getElementById("popup").style.display = "none";
+    }
+
     const SERVER_URL = "http://minesmp.mc.hostify.cz:3556/status";
 
     setInterval(() => {
